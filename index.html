@@ -1,0 +1,3244 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="theme-color"
+    content="#333333">
+
+<meta
+    name="description"
+    content="シンプルな散財ログ">
+
+<link
+    rel="manifest"
+    href="manifest.json">
+
+<title>散財ログ</title>
+
+
+<style>
+
+/* =========================================================
+   基本
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    background: #f5f5f3;
+
+    color: #333;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans JP",
+        sans-serif;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+
+button,
+input,
+select {
+
+    font: inherit;
+
+}
+
+
+.app {
+
+    width:
+        min(100%, 560px);
+
+    min-height:
+        100vh;
+
+    margin:
+        0 auto;
+
+    padding:
+        20px
+        16px
+        100px;
+
+}
+
+
+/* =========================================================
+   ヘッダー
+========================================================= */
+
+.header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        18px;
+
+}
+
+
+.header h1 {
+
+    margin: 0;
+
+    font-size:
+        25px;
+
+}
+
+
+.header p {
+
+    margin:
+        4px
+        0
+        0;
+
+    color:
+        #888;
+
+    font-size:
+        13px;
+
+}
+
+
+.icon-button {
+
+    border:
+        none;
+
+    background:
+        white;
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    border-radius:
+        14px;
+
+    font-size:
+        21px;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.06);
+
+}
+
+
+/* =========================================================
+   サマリー
+========================================================= */
+
+.summary {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.summary-card {
+
+    background:
+        white;
+
+    border-radius:
+        18px;
+
+    padding:
+        15px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.04);
+
+}
+
+
+.summary-card span {
+
+    display:
+        block;
+
+    color:
+        #888;
+
+    font-size:
+        13px;
+
+    margin-bottom:
+        4px;
+
+}
+
+
+.summary-card strong {
+
+    font-size:
+        23px;
+
+}
+
+
+/* =========================================================
+   入力カード
+========================================================= */
+
+.entry-card {
+
+    background:
+        white;
+
+    border-radius:
+        22px;
+
+    padding:
+        18px;
+
+    box-shadow:
+        0 2px 10px
+        rgba(0,0,0,0.05);
+
+}
+
+
+/* =========================================================
+   日付
+========================================================= */
+
+.date-row {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        14px;
+
+}
+
+
+.date-label {
+
+    color:
+        #888;
+
+    font-size:
+        13px;
+
+}
+
+
+#date {
+
+    border:
+        1px solid #ddd;
+
+    border-radius:
+        10px;
+
+    padding:
+        8px
+        10px;
+
+    background:
+        #fafafa;
+
+    font-size:
+        14px;
+
+}
+
+
+/* =========================================================
+   金額
+========================================================= */
+
+.input-label {
+
+    color:
+        #888;
+
+    font-size:
+        13px;
+
+}
+
+
+.amount-area {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    border-bottom:
+        2px solid #ddd;
+
+    margin-top:
+        4px;
+
+    margin-bottom:
+        16px;
+
+}
+
+
+.amount-area span {
+
+    color:
+        #888;
+
+    font-size:
+        25px;
+
+}
+
+
+#amount {
+
+    width:
+        100%;
+
+    border:
+        none;
+
+    outline:
+        none;
+
+    background:
+        transparent;
+
+    font-size:
+        36px;
+
+    font-weight:
+        bold;
+
+    padding:
+        4px
+        0
+        8px;
+
+    text-align:
+        right;
+
+}
+
+
+#amount::placeholder {
+
+    color:
+        #ccc;
+
+}
+
+
+/* =========================================================
+   カテゴリ
+========================================================= */
+
+.category-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        9px;
+
+}
+
+
+.category-button {
+
+    min-height:
+        55px;
+
+    border:
+        1px solid #ddd;
+
+    border-radius:
+        14px;
+
+    background:
+        #fafafa;
+
+    color:
+        #333;
+
+    cursor:
+        pointer;
+
+    font-size:
+        14px;
+
+    transition:
+        transform .08s,
+        background .08s;
+
+}
+
+
+.category-button:active {
+
+    transform:
+        scale(.97);
+
+    background:
+        #eee;
+
+}
+
+
+/* =========================================================
+   ゲーム
+========================================================= */
+
+.game-panel {
+
+    display:
+        none;
+
+    margin-top:
+        12px;
+
+    padding:
+        12px;
+
+    background:
+        #f5f5f3;
+
+    border-radius:
+        16px;
+
+}
+
+
+.game-panel.show {
+
+    display:
+        block;
+
+}
+
+
+.game-title {
+
+    color:
+        #888;
+
+    font-size:
+        12px;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.game-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        8px;
+
+}
+
+
+.game-button {
+
+    min-height:
+        44px;
+
+    border:
+        1px solid #ddd;
+
+    border-radius:
+        12px;
+
+    background:
+        white;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =========================================================
+   メモ
+========================================================= */
+
+.memo-area {
+
+    margin-top:
+        10px;
+
+    color:
+        #888;
+
+    font-size:
+        13px;
+
+}
+
+
+.memo-area summary {
+
+    cursor:
+        pointer;
+
+    padding:
+        7px
+        2px;
+
+}
+
+
+#memo {
+
+    width:
+        100%;
+
+    border:
+        1px solid #ddd;
+
+    border-radius:
+        12px;
+
+    padding:
+        11px;
+
+    margin-top:
+        7px;
+
+    outline:
+        none;
+
+}
+
+
+/* =========================================================
+   メッセージ
+========================================================= */
+
+.message {
+
+    min-height:
+        20px;
+
+    margin:
+        9px
+        0
+        0;
+
+    text-align:
+        center;
+
+    color:
+        #4d7a5a;
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   最近の記録
+========================================================= */
+
+.recent {
+
+    margin-top:
+        24px;
+
+}
+
+
+.section-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.section-header h2 {
+
+    margin:
+        0;
+
+    font-size:
+        18px;
+
+}
+
+
+.record-list {
+
+    background:
+        white;
+
+    border-radius:
+        18px;
+
+    overflow:
+        hidden;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.04);
+
+}
+
+
+.record {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr auto;
+
+    gap:
+        8px;
+
+    padding:
+        13px
+        15px;
+
+    border-bottom:
+        1px solid #eee;
+
+    cursor:
+        pointer;
+
+}
+
+
+.record:last-child {
+
+    border-bottom:
+        none;
+
+}
+
+
+.record-category {
+
+    font-weight:
+        bold;
+
+}
+
+
+.record-subcategory {
+
+    display:
+        inline-block;
+
+    margin-left:
+        5px;
+
+    color:
+        #888;
+
+    font-size:
+        11px;
+
+    font-weight:
+        normal;
+
+}
+
+
+.record-meta {
+
+    margin-top:
+        3px;
+
+    color:
+        #999;
+
+    font-size:
+        12px;
+
+}
+
+
+.record-amount {
+
+    align-self:
+        center;
+
+    font-weight:
+        bold;
+
+}
+
+
+.empty {
+
+    padding:
+        28px
+        15px;
+
+    text-align:
+        center;
+
+    color:
+        #999;
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   下部メニュー
+========================================================= */
+
+.bottom-menu {
+
+    position:
+        fixed;
+
+    left:
+        50%;
+
+    bottom:
+        12px;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(
+            calc(100% - 24px),
+            520px
+        );
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap:
+        4px;
+
+    padding:
+        6px;
+
+    background:
+        rgba(255,255,255,0.95);
+
+    border-radius:
+        18px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(0,0,0,0.12);
+
+}
+
+
+.menu-button {
+
+    min-height:
+        42px;
+
+    border:
+        none;
+
+    border-radius:
+        13px;
+
+    background:
+        transparent;
+
+    color:
+        #888;
+
+    cursor:
+        pointer;
+
+}
+
+
+.menu-button.active {
+
+    background:
+        #333;
+
+    color:
+        white;
+
+}
+
+
+/* =========================================================
+   ダイアログ
+========================================================= */
+
+dialog {
+
+    width:
+        min(94vw, 520px);
+
+    max-height:
+        82vh;
+
+    border:
+        none;
+
+    border-radius:
+        22px;
+
+    padding:
+        18px;
+
+    box-shadow:
+        0 20px 70px
+        rgba(0,0,0,0.25);
+
+}
+
+
+dialog::backdrop {
+
+    background:
+        rgba(0,0,0,0.3);
+
+}
+
+
+.dialog-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin-bottom:
+        14px;
+
+}
+
+
+.dialog-header h2 {
+
+    margin:
+        0;
+
+}
+
+
+.close-button {
+
+    width:
+        36px;
+
+    height:
+        36px;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    background:
+        #f1f1f1;
+
+    font-size:
+        20px;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =========================================================
+   編集
+========================================================= */
+
+.edit-field {
+
+    margin-bottom:
+        15px;
+
+}
+
+
+.edit-field label {
+
+    display:
+        block;
+
+    color:
+        #888;
+
+    font-size:
+        13px;
+
+    margin-bottom:
+        5px;
+
+}
+
+
+.edit-field input,
+.edit-field select {
+
+    width:
+        100%;
+
+    padding:
+        11px;
+
+    border:
+        1px solid #ddd;
+
+    border-radius:
+        12px;
+
+    background:
+        white;
+
+    font-size:
+        15px;
+
+}
+
+
+.edit-buttons {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        9px;
+
+    margin-top:
+        20px;
+
+}
+
+
+.edit-save {
+
+    border:
+        none;
+
+    border-radius:
+        13px;
+
+    background:
+        #333;
+
+    color:
+        white;
+
+    min-height:
+        48px;
+
+    cursor:
+        pointer;
+
+}
+
+
+.edit-delete {
+
+    border:
+        none;
+
+    border-radius:
+        13px;
+
+    background:
+        #f1e5e5;
+
+    color:
+        #a44;
+
+    min-height:
+        48px;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =========================================================
+   集計
+========================================================= */
+
+.stat-total {
+
+    background:
+        #f4f4f2;
+
+    border-radius:
+        16px;
+
+    padding:
+        15px;
+
+    margin-bottom:
+        15px;
+
+}
+
+
+.stat-total span {
+
+    display:
+        block;
+
+    color:
+        #888;
+
+    font-size:
+        13px;
+
+}
+
+
+.stat-total strong {
+
+    font-size:
+        28px;
+
+}
+
+
+.stat-row {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        90px 1fr auto;
+
+    gap:
+        9px;
+
+    align-items:
+        center;
+
+    margin:
+        13px 0;
+
+    font-size:
+        13px;
+
+}
+
+
+.bar {
+
+    height:
+        9px;
+
+    background:
+        #eee;
+
+    border-radius:
+        99px;
+
+    overflow:
+        hidden;
+
+}
+
+
+.bar span {
+
+    display:
+        block;
+
+    height:
+        100%;
+
+    background:
+        #444;
+
+    border-radius:
+        99px;
+
+}
+
+
+/* =========================================================
+   スマホ
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .category-button {
+
+        min-height:
+            50px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<header class="header">
+
+    <div>
+
+        <h1>散財ログ</h1>
+
+        <p id="todayLabel"></p>
+
+    </div>
+
+
+    <button
+        class="icon-button"
+        id="exportButton"
+        aria-label="CSV出力">
+
+        ↥
+
+    </button>
+
+</header>
+
+
+
+<section class="summary">
+
+
+    <div class="summary-card">
+
+        <span>
+            今日
+        </span>
+
+        <strong id="todayTotal">
+            ¥0
+        </strong>
+
+    </div>
+
+
+    <div class="summary-card">
+
+        <span>
+            今月
+        </span>
+
+        <strong id="monthTotal">
+            ¥0
+        </strong>
+
+    </div>
+
+
+</section>
+
+
+
+<section class="entry-card">
+
+
+    <div class="date-row">
+
+        <span class="date-label">
+            日付
+        </span>
+
+
+        <input
+            type="date"
+            id="date">
+
+    </div>
+
+
+
+    <div class="input-label">
+        金額
+    </div>
+
+
+    <div class="amount-area">
+
+        <span>
+            ¥
+        </span>
+
+
+        <input
+            id="amount"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            step="1"
+            placeholder="0"
+            autocomplete="off">
+
+    </div>
+
+
+
+    <div class="category-grid">
+
+
+        <button
+            class="category-button"
+            data-category="自販機">
+
+            自販機
+
+        </button>
+
+
+        <button
+            class="category-button"
+            data-category="昼食">
+
+            昼食
+
+        </button>
+
+
+        <button
+            class="category-button"
+            data-category="夕食">
+
+            夕食
+
+        </button>
+
+
+        <button
+            class="category-button"
+            data-category="本">
+
+            本
+
+        </button>
+
+
+        <button
+            class="category-button"
+            data-category="映画">
+
+            映画
+
+        </button>
+
+
+        <button
+            class="category-button"
+            data-category="ゲーム">
+
+            ゲーム
+
+        </button>
+
+
+        <button
+            class="category-button"
+            data-category="チケット">
+
+            チケット
+
+        </button>
+
+
+        <button
+            class="category-button"
+            data-category="その他">
+
+            その他
+
+        </button>
+
+
+    </div>
+
+
+
+    <div
+        class="game-panel"
+        id="gamePanel">
+
+
+        <div class="game-title">
+            ゲームの種類
+        </div>
+
+
+        <div class="game-grid">
+
+
+            <button
+                class="game-button"
+                data-subcategory="ガチャガチャ">
+
+                ガチャガチャ
+
+            </button>
+
+
+            <button
+                class="game-button"
+                data-subcategory="クレーン">
+
+                クレーン
+
+            </button>
+
+
+            <button
+                class="game-button"
+                data-subcategory="アプリ">
+
+                アプリ
+
+            </button>
+
+
+            <button
+                class="game-button"
+                data-subcategory="謎解き">
+
+                謎解き
+
+            </button>
+
+
+            <button
+                class="game-button"
+                data-subcategory="その他">
+
+                その他
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+
+    <details class="memo-area">
+
+        <summary>
+            メモを追加（任意）
+        </summary>
+
+
+        <input
+            id="memo"
+            type="text"
+            maxlength="80"
+            placeholder="例：○○のグッズ">
+
+    </details>
+
+
+
+    <p
+        class="message"
+        id="message">
+    </p>
+
+
+</section>
+
+
+
+<section class="recent">
+
+
+    <div class="section-header">
+
+        <h2>
+            最近の記録
+        </h2>
+
+    </div>
+
+
+    <div
+        class="record-list"
+        id="recordList">
+    </div>
+
+
+</section>
+
+
+</div>
+
+
+
+<nav class="bottom-menu">
+
+
+    <button
+        class="menu-button active"
+        data-view="home">
+
+        記録
+
+    </button>
+
+
+    <button
+        class="menu-button"
+        data-view="history">
+
+        履歴
+
+    </button>
+
+
+    <button
+        class="menu-button"
+        data-view="stats">
+
+        集計
+
+    </button>
+
+
+</nav>
+
+
+
+<dialog id="historyDialog">
+
+
+    <div class="dialog-header">
+
+        <h2>
+            履歴
+        </h2>
+
+
+        <button
+            class="close-button"
+            id="closeHistory">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div id="historyList"></div>
+
+
+</dialog>
+
+
+
+<dialog id="editDialog">
+
+
+    <div class="dialog-header">
+
+        <h2>
+            記録を編集
+        </h2>
+
+
+        <button
+            class="close-button"
+            id="closeEdit">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div id="editContent"></div>
+
+
+</dialog>
+
+
+
+<dialog id="statsDialog">
+
+
+    <div class="dialog-header">
+
+        <h2>
+            集計
+        </h2>
+
+
+        <button
+            class="close-button"
+            id="closeStats">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div id="statsContent"></div>
+
+
+</dialog>
+
+
+
+<script>
+
+/* =========================================================
+   IndexedDB
+========================================================= */
+
+const DB_NAME =
+    "scatter-log-db";
+
+const STORE_NAME =
+    "expenses";
+
+let db;
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const $ =
+    id =>
+        document.getElementById(id);
+
+
+/* =========================================================
+   DBを開く
+========================================================= */
+
+function openDatabase() {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const request =
+                indexedDB.open(
+                    DB_NAME,
+                    1
+                );
+
+
+            request.onupgradeneeded =
+                () => {
+
+                    const database =
+                        request.result;
+
+
+                    if (
+                        !database
+                            .objectStoreNames
+                            .contains(STORE_NAME)
+                    ) {
+
+                        database
+                            .createObjectStore(
+                                STORE_NAME,
+                                {
+                                    keyPath:
+                                        "id",
+                                    autoIncrement:
+                                        true
+                                }
+                            );
+
+                    }
+
+                };
+
+
+            request.onsuccess =
+                () => {
+
+                    db =
+                        request.result;
+
+                    resolve();
+
+                };
+
+
+            request.onerror =
+                () => {
+
+                    reject(
+                        request.error
+                    );
+
+                };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   全件取得
+========================================================= */
+
+function getAllExpenses() {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const transaction =
+                db.transaction(
+                    STORE_NAME,
+                    "readonly"
+                );
+
+
+            const request =
+                transaction
+                    .objectStore(
+                        STORE_NAME
+                    )
+                    .getAll();
+
+
+            request.onsuccess =
+                () =>
+                    resolve(
+                        request.result
+                    );
+
+
+            request.onerror =
+                () =>
+                    reject(
+                        request.error
+                    );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   追加
+========================================================= */
+
+function addExpense(expense) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const transaction =
+                db.transaction(
+                    STORE_NAME,
+                    "readwrite"
+                );
+
+
+            transaction
+                .objectStore(
+                    STORE_NAME
+                )
+                .add(expense);
+
+
+            transaction.oncomplete =
+                () =>
+                    resolve();
+
+
+            transaction.onerror =
+                () =>
+                    reject(
+                        transaction.error
+                    );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   更新
+========================================================= */
+
+function updateExpense(expense) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const transaction =
+                db.transaction(
+                    STORE_NAME,
+                    "readwrite"
+                );
+
+
+            transaction
+                .objectStore(
+                    STORE_NAME
+                )
+                .put(expense);
+
+
+            transaction.oncomplete =
+                () =>
+                    resolve();
+
+
+            transaction.onerror =
+                () =>
+                    reject(
+                        transaction.error
+                    );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   削除
+========================================================= */
+
+function deleteExpense(id) {
+
+    return new Promise(
+        (resolve, reject) => {
+
+            const transaction =
+                db.transaction(
+                    STORE_NAME,
+                    "readwrite"
+                );
+
+
+            transaction
+                .objectStore(
+                    STORE_NAME
+                )
+                .delete(id);
+
+
+            transaction.oncomplete =
+                () =>
+                    resolve();
+
+
+            transaction.onerror =
+                () =>
+                    reject(
+                        transaction.error
+                    );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   日付キー
+========================================================= */
+
+function dateKey(date) {
+
+    const d =
+        new Date(date);
+
+
+    return (
+
+        d.getFullYear()
+        + "-"
+        + String(
+            d.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        )
+        + "-"
+        + String(
+            d.getDate()
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   月キー
+========================================================= */
+
+function monthKey(date) {
+
+    const d =
+        new Date(date);
+
+
+    return (
+
+        d.getFullYear()
+        + "-"
+        + String(
+            d.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   円表示
+========================================================= */
+
+function yen(amount) {
+
+    return (
+        "¥"
+        +
+        Number(
+            amount
+        ).toLocaleString(
+            "ja-JP"
+        )
+    );
+
+}
+
+
+/* =========================================================
+   HTMLエスケープ
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   メッセージ
+========================================================= */
+
+function showMessage(text) {
+
+    $("message")
+        .textContent =
+        text;
+
+
+    clearTimeout(
+        showMessage.timer
+    );
+
+
+    showMessage.timer =
+        setTimeout(
+            () => {
+
+                $("message")
+                    .textContent =
+                    "";
+
+            },
+            1800
+        );
+
+}
+
+
+/* =========================================================
+   記録HTML
+========================================================= */
+
+function recordHTML(expense) {
+
+    let category =
+        escapeHTML(
+            expense.category
+        );
+
+
+    if (
+        expense.subcategory
+    ) {
+
+        category +=
+            `
+            <span
+                class="record-subcategory">
+
+                ${escapeHTML(
+                    expense.subcategory
+                )}
+
+            </span>
+            `;
+
+    }
+
+
+    const memo =
+        expense.memo
+            ? "・"
+              +
+              escapeHTML(
+                  expense.memo
+              )
+            : "";
+
+
+    return `
+
+        <div
+            class="record"
+            data-id="${expense.id}">
+
+            <div>
+
+                <div
+                    class="record-category">
+
+                    ${category}
+
+                </div>
+
+
+                <div
+                    class="record-meta">
+
+                    ${expense.date}
+                    ${memo}
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="record-amount">
+
+                ${yen(
+                    expense.amount
+                )}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   画面更新
+========================================================= */
+
+async function refresh() {
+
+    const expenses =
+        await getAllExpenses();
+
+
+    expenses.sort(
+        (a, b) =>
+            new Date(b.createdAt)
+            -
+            new Date(a.createdAt)
+    );
+
+
+    const now =
+        new Date();
+
+
+    const today =
+        dateKey(now);
+
+
+    const month =
+        monthKey(now);
+
+
+    const todayTotal =
+        expenses
+
+            .filter(
+                x =>
+                    x.date ===
+                    today
+            )
+
+            .reduce(
+                (sum, x) =>
+                    sum + x.amount,
+                0
+            );
+
+
+    const monthTotal =
+        expenses
+
+            .filter(
+                x =>
+                    x.date.startsWith(
+                        month
+                    )
+            )
+
+            .reduce(
+                (sum, x) =>
+                    sum + x.amount,
+                0
+            );
+
+
+    $("todayTotal")
+        .textContent =
+        yen(
+            todayTotal
+        );
+
+
+    $("monthTotal")
+        .textContent =
+        yen(
+            monthTotal
+        );
+
+
+    const recent =
+        expenses.slice(
+            0,
+            8
+        );
+
+
+    if (
+        recent.length === 0
+    ) {
+
+        $("recordList")
+            .innerHTML = `
+
+                <div
+                    class="empty">
+
+                    まだ記録がありません
+
+                </div>
+
+            `;
+
+    } else {
+
+        $("recordList")
+            .innerHTML =
+            recent
+                .map(
+                    recordHTML
+                )
+                .join("");
+
+
+        attachRecordClick();
+
+    }
+
+}
+
+
+/* =========================================================
+   記録
+========================================================= */
+
+async function saveExpense(
+    category,
+    subcategory = ""
+) {
+
+    const amount =
+        Number(
+            $("amount").value
+        );
+
+
+    if (
+        !Number.isInteger(amount)
+        ||
+        amount <= 0
+    ) {
+
+        showMessage(
+            "金額を入力してください"
+        );
+
+        $("amount")
+            .focus();
+
+        return;
+
+    }
+
+
+    const date =
+        $("date").value;
+
+
+    if (!date) {
+
+        showMessage(
+            "日付を選択してください"
+        );
+
+        return;
+
+    }
+
+
+    const expense = {
+
+        amount:
+            amount,
+
+        category:
+            category,
+
+        subcategory:
+            subcategory,
+
+        memo:
+            $("memo")
+                .value
+                .trim(),
+
+        date:
+            date,
+
+        createdAt:
+            new Date()
+                .toISOString()
+
+    };
+
+
+    /*
+     * まずスマホ内に保存
+     *
+     * 将来ここに
+     * Google同期処理を追加する
+     */
+
+    await addExpense(
+        expense
+    );
+
+
+    $("amount")
+        .value =
+        "";
+
+
+    $("memo")
+        .value =
+        "";
+
+
+    $("gamePanel")
+        .classList
+        .remove(
+            "show"
+        );
+
+
+    showMessage(
+        "記録しました"
+    );
+
+
+    await refresh();
+
+
+    $("amount")
+        .focus();
+
+}
+
+
+/* =========================================================
+   通常カテゴリ
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".category-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                async () => {
+
+                    const category =
+                        button.dataset
+                            .category;
+
+
+                    if (
+                        category ===
+                        "ゲーム"
+                    ) {
+
+                        $("gamePanel")
+                            .classList
+                            .toggle(
+                                "show"
+                            );
+
+                        return;
+
+                    }
+
+
+                    await saveExpense(
+                        category
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   ゲーム
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".game-button"
+    )
+    .forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                async () => {
+
+                    await saveExpense(
+                        "ゲーム",
+                        button.dataset
+                            .subcategory
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   履歴
+========================================================= */
+
+async function openHistory() {
+
+    const expenses =
+        await getAllExpenses();
+
+
+    expenses.sort(
+        (a, b) =>
+            new Date(b.createdAt)
+            -
+            new Date(a.createdAt)
+    );
+
+
+    if (
+        expenses.length === 0
+    ) {
+
+        $("historyList")
+            .innerHTML = `
+
+                <div
+                    class="empty">
+
+                    まだ記録がありません
+
+                </div>
+
+            `;
+
+    } else {
+
+        $("historyList")
+            .innerHTML =
+            expenses
+                .map(
+                    recordHTML
+                )
+                .join("");
+
+
+        attachRecordClick();
+
+    }
+
+
+    $("historyDialog")
+        .showModal();
+
+}
+
+
+/* =========================================================
+   記録クリック
+========================================================= */
+
+function attachRecordClick() {
+
+    document
+        .querySelectorAll(
+            ".record"
+        )
+        .forEach(
+            record => {
+
+                record.addEventListener(
+                    "click",
+                    () => {
+
+                        openEdit(
+                            Number(
+                                record
+                                    .dataset
+                                    .id
+                            )
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   編集
+========================================================= */
+
+async function openEdit(id) {
+
+    const expenses =
+        await getAllExpenses();
+
+
+    const expense =
+        expenses.find(
+            x =>
+                x.id === id
+        );
+
+
+    if (!expense) {
+
+        return;
+
+    }
+
+
+    $("editContent")
+        .innerHTML = `
+
+            <div
+                class="edit-field">
+
+                <label>
+                    日付
+                </label>
+
+                <input
+                    type="date"
+                    id="editDate"
+                    value="${expense.date}">
+
+            </div>
+
+
+            <div
+                class="edit-field">
+
+                <label>
+                    金額
+                </label>
+
+                <input
+                    type="number"
+                    id="editAmount"
+                    value="${expense.amount}"
+                    min="1">
+
+            </div>
+
+
+            <div
+                class="edit-field">
+
+                <label>
+                    カテゴリ
+                </label>
+
+                <select
+                    id="editCategory">
+
+                    <option>
+                        自販機
+                    </option>
+
+                    <option>
+                        昼食
+                    </option>
+
+                    <option>
+                        夕食
+                    </option>
+
+                    <option>
+                        本
+                    </option>
+
+                    <option>
+                        映画
+                    </option>
+
+                    <option>
+                        ゲーム
+                    </option>
+
+                    <option>
+                        チケット
+                    </option>
+
+                    <option>
+                        その他
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                class="edit-field">
+
+                <label>
+                    ゲームの種類
+                </label>
+
+                <select
+                    id="editSubcategory">
+
+                    <option value="">
+                        なし
+                    </option>
+
+                    <option>
+                        ガチャガチャ
+                    </option>
+
+                    <option>
+                        クレーン
+                    </option>
+
+                    <option>
+                        アプリ
+                    </option>
+
+                    <option>
+                        謎解き
+                    </option>
+
+                    <option>
+                        その他
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                class="edit-field">
+
+                <label>
+                    メモ
+                </label>
+
+                <input
+                    type="text"
+                    id="editMemo"
+                    maxlength="80">
+
+            </div>
+
+
+            <div
+                class="edit-buttons">
+
+                <button
+                    class="edit-delete"
+                    id="editDelete">
+
+                    削除
+
+                </button>
+
+
+                <button
+                    class="edit-save"
+                    id="editSave">
+
+                    保存
+
+                </button>
+
+            </div>
+
+        `;
+
+
+    $("editCategory")
+        .value =
+        expense.category;
+
+
+    $("editSubcategory")
+        .value =
+        expense.subcategory || "";
+
+
+    $("editMemo")
+        .value =
+        expense.memo || "";
+
+
+    $("editSave")
+        .onclick =
+        async () => {
+
+            const updated = {
+
+                id:
+                    expense.id,
+
+                amount:
+                    Number(
+                        $("editAmount")
+                            .value
+                    ),
+
+                category:
+                    $("editCategory")
+                        .value,
+
+                subcategory:
+                    $("editSubcategory")
+                        .value,
+
+                memo:
+                    $("editMemo")
+                        .value
+                        .trim(),
+
+                date:
+                    $("editDate")
+                        .value,
+
+                createdAt:
+                    expense.createdAt
+
+            };
+
+
+            if (
+                !Number.isInteger(
+                    updated.amount
+                )
+                ||
+                updated.amount <= 0
+            ) {
+
+                alert(
+                    "金額を入力してください"
+                );
+
+                return;
+
+            }
+
+
+            await updateExpense(
+                updated
+            );
+
+
+            $("editDialog")
+                .close();
+
+
+            await refresh();
+
+        };
+
+
+    $("editDelete")
+        .onclick =
+        async () => {
+
+            if (
+                !confirm(
+                    "この記録を削除しますか？"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            await deleteExpense(
+                expense.id
+            );
+
+
+            $("editDialog")
+                .close();
+
+
+            await refresh();
+
+        };
+
+
+    $("editDialog")
+        .showModal();
+
+}
+
+
+/* =========================================================
+   集計
+========================================================= */
+
+async function openStats() {
+
+    const expenses =
+        await getAllExpenses();
+
+
+    const month =
+        monthKey(
+            new Date()
+        );
+
+
+    const current =
+        expenses.filter(
+            x =>
+                x.date.startsWith(
+                    month
+                )
+        );
+
+
+    const total =
+        current.reduce(
+            (sum, x) =>
+                sum + x.amount,
+            0
+        );
+
+
+    const categoryTotal =
+        {};
+
+
+    current.forEach(
+        expense => {
+
+            if (
+                !categoryTotal[
+                    expense.category
+                ]
+            ) {
+
+                categoryTotal[
+                    expense.category
+                ] = 0;
+
+            }
+
+
+            categoryTotal[
+                expense.category
+            ] += expense.amount;
+
+        }
+    );
+
+
+    const rows =
+        Object.entries(
+            categoryTotal
+        )
+        .sort(
+            (a, b) =>
+                b[1] - a[1]
+        );
+
+
+    const max =
+        rows.length
+            ? rows[0][1]
+            : 1;
+
+
+    let html = `
+
+        <div
+            class="stat-total">
+
+            <span>
+                今月
+            </span>
+
+            <strong>
+                ${yen(total)}
+            </strong>
+
+        </div>
+
+    `;
+
+
+    rows.forEach(
+        ([category, amount]) => {
+
+            const width =
+                Math.round(
+                    amount /
+                    max *
+                    100
+                );
+
+
+            html += `
+
+                <div
+                    class="stat-row">
+
+                    <span>
+                        ${escapeHTML(
+                            category
+                        )}
+                    </span>
+
+
+                    <div
+                        class="bar">
+
+                        <span
+                            style="
+                                width:${width}%
+                            ">
+                        </span>
+
+                    </div>
+
+
+                    <strong>
+                        ${yen(amount)}
+                    </strong>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    if (
+        rows.length === 0
+    ) {
+
+        html += `
+
+            <div
+                class="empty">
+
+                今月の記録がありません
+
+            </div>
+
+        `;
+
+    }
+
+
+    $("statsContent")
+        .innerHTML =
+        html;
+
+
+    $("statsDialog")
+        .showModal();
+
+}
+
+
+/* =========================================================
+   CSV
+========================================================= */
+
+async function exportCSV() {
+
+    const expenses =
+        await getAllExpenses();
+
+
+    expenses.sort(
+        (a, b) =>
+            a.date.localeCompare(
+                b.date
+            )
+    );
+
+
+    const rows = [
+
+        [
+            "日付",
+            "金額",
+            "大分類",
+            "小分類",
+            "メモ"
+        ],
+
+        ...expenses.map(
+            x => [
+
+                x.date,
+
+                x.amount,
+
+                x.category,
+
+                x.subcategory || "",
+
+                x.memo || ""
+
+            ]
+        )
+
+    ];
+
+
+    const csv =
+        "\uFEFF"
+        +
+        rows
+            .map(
+                row =>
+                    row
+                        .map(
+                            value =>
+                                `"${String(
+                                    value
+                                ).replaceAll(
+                                    '"',
+                                    '""'
+                                )}"`
+                        )
+                        .join(",")
+            )
+            .join("\r\n");
+
+
+    const blob =
+        new Blob(
+            [csv],
+            {
+                type:
+                    "text/csv;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        "散財ログ_"
+        +
+        monthKey(
+            new Date()
+        )
+        +
+        ".csv";
+
+
+    link.click();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+
+/* =========================================================
+   初期化
+========================================================= */
+
+async function initialize() {
+
+    await openDatabase();
+
+
+    const now =
+        new Date();
+
+
+    $("todayLabel")
+        .textContent =
+
+        now.getFullYear()
+        + "年"
+        + (
+            now.getMonth() + 1
+        )
+        + "月"
+        + now.getDate()
+        + "日";
+
+
+    $("date")
+        .value =
+        dateKey(now);
+
+
+    $("exportButton")
+        .addEventListener(
+            "click",
+            exportCSV
+        );
+
+
+    document
+        .querySelector(
+            '[data-view="history"]'
+        )
+        .addEventListener(
+            "click",
+            openHistory
+        );
+
+
+    document
+        .querySelector(
+            '[data-view="stats"]'
+        )
+        .addEventListener(
+            "click",
+            openStats
+        );
+
+
+    document
+        .querySelector(
+            '[data-view="home"]'
+        )
+        .addEventListener(
+            "click",
+            () => {
+
+                $("amount")
+                    .focus();
+
+            }
+        );
+
+
+    $("closeHistory")
+        .onclick =
+        () =>
+            $("historyDialog")
+                .close();
+
+
+    $("closeEdit")
+        .onclick =
+        () =>
+            $("editDialog")
+                .close();
+
+
+    $("closeStats")
+        .onclick =
+        () =>
+            $("statsDialog")
+                .close();
+
+
+    document
+        .querySelectorAll(
+            ".menu-button"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        document
+                            .querySelectorAll(
+                                ".menu-button"
+                            )
+                            .forEach(
+                                b =>
+                                    b.classList
+                                     .remove(
+                                         "active"
+                                     )
+                            );
+
+
+                        this.classList
+                            .add(
+                                "active"
+                            );
+
+                    }
+                );
+
+            }
+        );
+
+
+    await refresh();
+
+}
+
+
+/* =========================================================
+   起動
+========================================================= */
+
+initialize()
+    .catch(
+        error => {
+
+            console.error(
+                error
+            );
+
+
+            document.body.innerHTML = `
+
+                <main
+                    style="
+                        padding:30px;
+                        font-family:system-ui;
+                    ">
+
+                    <h1>
+                        起動できませんでした
+                    </h1>
+
+                    <p>
+                        データベースを
+                        利用できませんでした。
+                    </p>
+
+                </main>
+
+            `;
+
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
